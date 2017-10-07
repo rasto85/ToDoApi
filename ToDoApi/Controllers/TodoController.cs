@@ -29,15 +29,30 @@ namespace ToDoApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var todo = _context.ToDoItems.Single(x => x.ToDoItemId == id);
+            return Ok(todo);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]ToDoItem toDo)
         {
+            _context.Add(toDo);
+            _context.SaveChanges();
+            return Ok();
+        }
+
+
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var todo = _context.ToDoItems.Single(x => x.ToDoItemId == id);
+            _context.ToDoItems.Remove(todo);
+            _context.SaveChanges();
+            return Ok();
         }
 
         // PUT api/values/5
@@ -46,10 +61,5 @@ namespace ToDoApi.Controllers
         {
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
