@@ -23,7 +23,7 @@ namespace ToDoApi.Controllers
         {
 
             var todos = _context.ToDoItems;
-            var apa = 3;
+            var apa = 2;
             return Ok(todos);
         }
 
